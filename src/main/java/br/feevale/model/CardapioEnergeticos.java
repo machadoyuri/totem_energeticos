@@ -7,6 +7,7 @@ public class CardapioEnergeticos {
 
     private List<ProdutoEnergetico> produtos = new ArrayList<>();
 
+    //30 tipos de energéticos vendidos no Brasil
     public CardapioEnergeticos() {
         produtos.add(new ProdutoEnergetico("Red Bull", 8.99, 250, "Red Bull", 0, null));
         produtos.add(new ProdutoEnergetico("Monster Energy", 10.99, 473, "Monster", 0, null));

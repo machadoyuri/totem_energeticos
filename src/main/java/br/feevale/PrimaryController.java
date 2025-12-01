@@ -1,29 +1,38 @@
 package br.feevale;
 
+import br.feevale.model.CardapioEnergeticos;
+import br.feevale.model.Carrinho;
+import br.feevale.model.ItemPedido;
+import br.feevale.model.Pedido;
+import br.feevale.model.ProdutoEnergetico;
+import br.feevale.model.TicketArmazenamento;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-
-import javafx.scene.control.ListView;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Separator;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
-import javafx.animation.Timeline;
-import javafx.animation.KeyFrame;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import br.feevale.model.*;
-import java.util.List;
 
 public class PrimaryController {
 
     @FXML
     private GridPane gridProdutos;
+
 
     private CardapioEnergeticos cardapio = new CardapioEnergeticos();
 
@@ -31,47 +40,13 @@ public class PrimaryController {
     private ListView<ProdutoEnergetico> listaProdutos;
 
     @FXML
-    private ListView<String> listaTickets;   // <--- ADICIONADO
+    private ListView<Pedido> listaTickets;
 
     private Set<String> produtosEmDestaque = new HashSet<>();
 
 
     @FXML
     public void initialize() {
-
-        // --------------------
-        //    PRODUTOS
-        // --------------------
-        cardapio.adicionarProduto(new ProdutoEnergetico("Red Bull", 8.99, 250, "Red Bull", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Monster Energy", 10.99, 473, "Monster", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("TNT Energy Drink", 6.99, 269, "TNT", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Baly", 11.50, 2000, "Baly", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Burn", 5.99, 260, "Burn", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Fusion", 5.80, 473, "Fusion", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Reign", 10.99, 473, "Reign", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Flying Horse", 13.00, 2000, "Flying Horse", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Vulcano", 16.99, 2000, "Vulcano", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Extra Power", 10.50, 1000, "Extra Power", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Vibe", 13.00, 2000, "Vibe", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Furioso", 8.85, 2000, "Furioso", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Red Horse", 10.40, 2000, "Red Horse", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Tsunami", 6.00, 2000, "Tsunami", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Night Power", 15.00, 2000, "Night Power", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Long Night", 6.00, 2000, "Long Night", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Big Power", 11.00, 2000, "Big Power", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Atomic", 7.00, 270, "Atomic", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("220V", 10.00, 2000, "220V", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Engov UP", 9.00, 269, "Engov", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Dopamina", 6.00, 269, "Dopamina", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Organique", 7.00, 269, "Organique", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Wewi Energy", 6.00, 269, "Wewi", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Life Strong", 8.00, 473, "Life Strong", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Start", 8.30, 2000, "Start", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Mood", 8.00, 269, "Mood", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Guara Mix", 3.00, 290, "Guara Mix", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Hype", 10.00, 355, "Hype", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Bivolt", 8.50, 2000, "Bivolt", 0, null));
-        cardapio.adicionarProduto(new ProdutoEnergetico("Itts", 11.00, 269, "Itts", 0, null));
 
         for (ProdutoEnergetico p : cardapio.getProdutos()) {
             listaProdutos.getItems().add(p);
@@ -81,7 +56,6 @@ public class PrimaryController {
             @Override
             protected void updateItem(ProdutoEnergetico produto, boolean empty) {
                 super.updateItem(produto, empty);
-
                 if (empty || produto == null) {
                     setText(null);
                     setStyle("");
@@ -105,27 +79,61 @@ public class PrimaryController {
             }
         });
 
-        // -------------------------
-        //     CARREGAR TICKETS
-        // -------------------------
-        atualizarListaTickets();
+        setupTicketList();
     }
 
+    private void setupTicketList() {
+        if (listaTickets != null) {
+            listaTickets.setItems(TicketArmazenamento.getTickets());
 
+            listaTickets.setCellFactory(param -> new ListCell<Pedido>() {
+                private final VBox container = new VBox(5);
+                private final HBox topRow = new HBox(10);
+                private final Label ticketInfo = new Label();
+                private final Pane pane = new Pane();
+                private final Button removeButton = new Button("-");
+                private final VBox itemsBox = new VBox(2);
 
-    // ---------------------------------------------------------
-    //           FUNÇÃO PARA ATUALIZAR LISTA DE TICKETS
-    // ---------------------------------------------------------
-    private void atualizarListaTickets() {
-        if (listaTickets == null) return;  // caso não exista no FXML
+                {
+                    HBox.setHgrow(pane, Priority.ALWAYS);
+                    topRow.getChildren().addAll(ticketInfo, pane, removeButton);
+                    container.getChildren().addAll(topRow, new Separator(), itemsBox);
 
-        List<String> tickets = TicketStore.getTickets();
+                    removeButton.setOnAction(event -> {
+                        Pedido pedido = getItem();
+                        if (pedido != null) {
+                            TicketArmazenamento.removerTicket(pedido);
+                            getListView().getItems().remove(pedido);
+                        }
+                    });
+                }
 
-        listaTickets.getItems().clear();
-        listaTickets.getItems().addAll(tickets);
+                @Override
+                protected void updateItem(Pedido pedido, boolean empty) {
+                    super.updateItem(pedido, empty);
+                    if (empty || pedido == null) {
+                        setGraphic(null);
+                    } else {
+                        ticketInfo.setText(String.format("Pedido #%05d - R$ %.2f (%s)",
+                                pedido.getNumero(),
+                                pedido.getTotal(),
+                                pedido.getMetodoPagamento()));
+
+                        itemsBox.getChildren().clear();
+                        if (pedido.getItens() != null) {
+                            for (ItemPedido item : pedido.getItens()) {
+                                itemsBox.getChildren().add(
+                                    new Label(String.format("  - %d x %s", item.getQuantidade(), item.getProduto().getNome()))
+                                );
+                            }
+                        }
+                        
+                        setGraphic(container);
+                    }
+                }
+            });
+        }
     }
-
-
 
     private void adicionarAoCarrinhoComFeedback(ProdutoEnergetico produto) {
         Carrinho.adicionar(produto);
@@ -140,9 +148,6 @@ public class PrimaryController {
     }
 
 
-    // ---------------------------------------------
-    //                BOTÕES
-    // ---------------------------------------------
     @FXML
     private void switchToSecondary() throws IOException {
         App.setRoot("secondary");
@@ -163,3 +168,4 @@ public class PrimaryController {
         }
     }
 }
+

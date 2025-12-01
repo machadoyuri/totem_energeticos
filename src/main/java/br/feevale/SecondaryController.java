@@ -36,7 +36,6 @@ public class SecondaryController {
     public void initialize() {
         configurarListaCarrinho();
         atualizarCarrinho();
-        // esconder o botão de seguimento se o carrinho estiver vazio
         btnSeguirPagamento.setVisible(!Carrinho.getItens().isEmpty());
     }
 

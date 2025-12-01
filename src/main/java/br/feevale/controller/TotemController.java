@@ -24,6 +24,7 @@ public class TotemController {
 
     private CardapioEnergeticos cardapio = new CardapioEnergeticos();
 
+    //30 tipos de energéticos vendidos no Brasil
     @FXML
     public void initialize() {
         cardapio.adicionarProduto(new ProdutoEnergetico("Red Bull", 8.99, 250, "Red Bull", 0, null));

@@ -30,10 +30,7 @@ public class LoginController {
             alert.setContentText("Login realizado com sucesso!");
             alert.showAndWait();
 
-            // 🔵 ABRIR TELA DE TICKETS
             abrirTelaTickets();
-
-            // 🔵 FECHAR JANELA DE LOGIN
             Stage stage = (Stage) campoUsuario.getScene().getWindow();
             stage.close();
 

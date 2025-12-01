@@ -8,15 +8,10 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox prefHeight="600.0" prefWidth="900.0" spacing="20" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.feevale.PrimaryController">
-
-    <!-- Linha com Label à esquerda e Button à direita -->
     <HBox prefWidth="900.0" spacing="0">
         <children>
             <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Cardápio" />
-
-            <!-- Região que expande e empurra o botão -->
             <Region HBox.hgrow="ALWAYS" />
-
             <Button text="ADMIN" onAction="#abrirLogin"/>
         </children>
     </HBox>
@@ -26,7 +21,5 @@
             <ListView fx:id="listaProdutos" prefHeight="450.0" prefWidth="883.0" />
         </children>
     </HBox>
-
     <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="38.0" maxWidth="117.0" minHeight="38.0" minWidth="117.0" onAction="#switchToSecondary" prefHeight="38.0" prefWidth="117.0" text="Ir para Carrinho" />
-
 </VBox>

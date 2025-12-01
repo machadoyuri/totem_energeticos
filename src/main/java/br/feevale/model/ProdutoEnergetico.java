@@ -1,37 +1,20 @@
 package br.feevale.model;
 
-public class ProdutoEnergetico {
+public class ProdutoEnergetico extends Produto {
 
-    private String nome;
-    private double preco;
+    private static final long serialVersionUID = 1L;
+
     private int ml;
     private String marca;
     private int estoque;
     private String sabor;
 
     public ProdutoEnergetico(String nome, double preco, int ml, String marca, int estoque, String sabor) {
-        this.nome = nome;
-        this.preco = preco;
+        super(nome, preco);
         this.ml = ml;
         this.marca = marca;
         this.estoque = estoque;
         this.sabor = sabor;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(double preco) {
-        this.preco = preco;
     }
 
     public int getMl() {
@@ -67,7 +50,12 @@ public class ProdutoEnergetico {
     }
 
     @Override
+    public String getDescricaoCompleta() {
+        return getNome() + " (" + ml + "ml) - " + sabor;
+    }
+
+    @Override
     public String toString() {
-        return nome + " (" + ml + "ml, " + sabor + ") - R$ " + String.format("%.2f", preco);
+        return getNome() + " (" + ml + "ml, " + sabor + ") - R$ " + String.format("%.2f", getPreco());
     }
 }

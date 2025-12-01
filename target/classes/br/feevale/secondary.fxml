@@ -10,12 +10,10 @@
 <?import javafx.scene.text.Font?>
 
 <VBox prefHeight="600.0" prefWidth="900.0" spacing="20" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.feevale.SecondaryController">
-
     <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Carrinho de Compras" />
    <Separator prefHeight="0.0" prefWidth="860.0" />
    <HBox alignment="CENTER" prefHeight="449.0" prefWidth="860.0">
       <children>
-      
           <ListView fx:id="listaCarrinho" prefHeight="397.0" prefWidth="443.0" />
          <Separator orientation="VERTICAL" prefHeight="432.0" prefWidth="17.0" />
          <VBox prefHeight="397.0" prefWidth="444.0">
@@ -60,7 +58,6 @@
    <Separator prefWidth="200.0" />
    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
       <children>
-      
           <Button onAction="#switchToPrimary" prefHeight="35.0" prefWidth="150.0" style="-fx-padding: 10px; -fx-font-size: 14px;" text="Voltar ao Cardápio">
             <HBox.margin>
                <Insets right="10.0" />
@@ -73,5 +70,4 @@
          </Button>
       </children>
    </HBox>
-
 </VBox>
