@@ -3,7 +3,12 @@ package br.feevale;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import javafx.scene.control.ListView;
 import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseButton;
@@ -11,9 +16,9 @@ import javafx.scene.layout.GridPane;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
-import br.feevale.model.CardapioEnergeticos;
-import br.feevale.model.Carrinho;
-import br.feevale.model.ProdutoEnergetico;
+
+import br.feevale.model.*;
+import java.util.List;
 
 public class PrimaryController {
 
@@ -24,10 +29,19 @@ public class PrimaryController {
 
     @FXML
     private ListView<ProdutoEnergetico> listaProdutos;
+
+    @FXML
+    private ListView<String> listaTickets;   // <--- ADICIONADO
+
     private Set<String> produtosEmDestaque = new HashSet<>();
+
 
     @FXML
     public void initialize() {
+
+        // --------------------
+        //    PRODUTOS
+        // --------------------
         cardapio.adicionarProduto(new ProdutoEnergetico("Red Bull", 8.99, 250, "Red Bull", 0, null));
         cardapio.adicionarProduto(new ProdutoEnergetico("Monster Energy", 10.99, 473, "Monster", 0, null));
         cardapio.adicionarProduto(new ProdutoEnergetico("TNT Energy Drink", 6.99, 269, "TNT", 0, null));
@@ -90,13 +104,33 @@ public class PrimaryController {
                 }
             }
         });
+
+        // -------------------------
+        //     CARREGAR TICKETS
+        // -------------------------
+        atualizarListaTickets();
     }
+
+
+
+    // ---------------------------------------------------------
+    //           FUNÇÃO PARA ATUALIZAR LISTA DE TICKETS
+    // ---------------------------------------------------------
+    private void atualizarListaTickets() {
+        if (listaTickets == null) return;  // caso não exista no FXML
+
+        List<String> tickets = TicketStore.getTickets();
+
+        listaTickets.getItems().clear();
+        listaTickets.getItems().addAll(tickets);
+    }
+
+
 
     private void adicionarAoCarrinhoComFeedback(ProdutoEnergetico produto) {
         Carrinho.adicionar(produto);
         produtosEmDestaque.add(produto.getNome());
         listaProdutos.refresh();
-        System.out.println("Adicionado ao carrinho: " + produto.getNome());
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), animEvent -> {
             produtosEmDestaque.remove(produto.getNome());
@@ -105,8 +139,27 @@ public class PrimaryController {
         timeline.play();
     }
 
+
+    // ---------------------------------------------
+    //                BOTÕES
+    // ---------------------------------------------
     @FXML
     private void switchToSecondary() throws IOException {
         App.setRoot("secondary");
+    }
+
+    @FXML
+    private void abrirLogin() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("loginadm.fxml"));
+            Scene cena = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Login do Administrador");
+            stage.setScene(cena);
+            stage.setResizable(false);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
